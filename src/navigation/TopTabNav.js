@@ -24,10 +24,10 @@ const TopTabNav = () => {
   }}
     >
       {TopNav.map(({Nombre,Componente,Size})=> <Tab.Screen
+      key={Nombre}
       options={{
         tabBarIcon: ({focused})=> <View 
-        key={Nombre}
-        className="h-10 flex items-center justify-center">
+        className="flex items-center justify-center h-10">
             <Text 
             style={{color:gris_oscuro}}
             className={`${focused ? "font-bold" : ""} 

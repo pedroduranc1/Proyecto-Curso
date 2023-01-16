@@ -6,7 +6,7 @@ import { StatusBar } from 'expo-status-bar'
 
 const Container = () => {
   return (
-    <View style={{ backgroundColor: blanco,paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 10}} 
+    <View style={{ backgroundColor: blanco,paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0}} 
     />
   )
 }
