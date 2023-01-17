@@ -11,6 +11,9 @@ import BasicScreen from "../screens/BasicScreen";
 import IntermedioScreen from "../screens/IntermedioScreen";
 import AvanzadoScreen from "../screens/AvanzadoScreen";
 import TiemposVerbales from "../screens/TiemposVerbales";
+import Modales from "../screens/Modales";
+import OtrasEstrcuturas from "../screens/OtrasEstrcuturas";
+import Vocabularios from "../screens/Vocabularios";
 
 export const MainNav = [
     {
@@ -28,6 +31,18 @@ export const MainNav = [
     {
         Nombre: "Tiempos Verbales",
         Componente: TiemposVerbales
+    },
+    {
+        Nombre: "Modales",
+        Componente: Modales
+    },
+    {
+        Nombre: "Otras estructuras",
+        Componente: OtrasEstrcuturas
+    },
+    {
+        Nombre: "Vocabulario",
+        Componente: Vocabularios
     }
 ]
 

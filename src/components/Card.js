@@ -3,8 +3,6 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import { gris_oscuro } from "../constant/colores";
 
 const Card = ({ imagen, nombre, navegacion,index }) => {
-
-  console.log(index)
   return (
     <TouchableOpacity
       onPress={() => navegacion.navigate(nombre)}

@@ -1,13 +1,13 @@
-import { View, Text,TouchableOpacity } from "react-native";
 import React from "react";
+import { View, Text,TouchableOpacity} from "react-native";
 import FooterNav from "../components/FooterNav";
 import CompHead from "../components/CompHead";
-import { gris,gris_oscuro } from "../constant/colores";
+import { gris, gris_oscuro } from "../constant/colores";
 
-const TiemposVerbales = ({ navigation }) => {
+const Vocabularios = ({ navigation }) => {
   return (
     <View className="flex-1">
-      <CompHead Nombre={"Tiempos Verbales"} />
+      <CompHead Nombre={"Vocabularios"} />
       {/* VIDEO FIELD */}
       <View className="w-full h-[25%] bg-black">
         <Text>VIDEO</Text>
@@ -29,8 +29,8 @@ const TiemposVerbales = ({ navigation }) => {
       </View>
       {/* BTN PRACTICAR */}
       <View className="flex items-center w-full px-10 mt-3">
-        <TouchableOpacity 
-          style={{backgroundColor:gris}}
+        <TouchableOpacity
+          style={{ backgroundColor: gris }}
           className="flex items-center w-full py-3 rounded-md"
         >
           <Text className="font-bold text-white">Practicar</Text>
@@ -41,4 +41,4 @@ const TiemposVerbales = ({ navigation }) => {
   );
 };
 
-export default TiemposVerbales;
+export default Vocabularios;
