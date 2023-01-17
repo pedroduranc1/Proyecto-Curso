@@ -1,45 +1,29 @@
-import { View, Text } from 'react-native'
+import { View,FlatList } from 'react-native'
 import React from 'react'
 import { gris_claro } from '../constant/colores'
 import MainInfo from '../components/MainInfo'
 import Card from '../components/Card'
+import { MediumsCards } from '../constant/DataNav'
 
-const IntermedioScreen = () => {
+const IntermedioScreen = ({navigation}) => {
   return (
     <View 
         style={{backgroundColor:gris_claro}}
         className="flex-1 w-screen h-screen px-[8%]">
       <MainInfo/>
-      <View
-        className="h-[30%]"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          flexDirection: "row",
-        }}
-      >
-        <Card 
-        imagen={require('../assets/interferencias.png')}
-        nombre={'Interferencias 1'}
+      <FlatList
+          data={MediumsCards}
+          numColumns={2}
+          renderItem={({ item , index}) => (
+            <Card
+              index={index}
+              imagen={item.Imagen}
+              nombre={item.Nombre}
+              navegacion={navigation}
+            />
+          )}
+          keyExtractor={(item) => `item-${item.Nombre}`}
         />
-        <Card 
-        imagen={require('../assets/preguntas.png')}
-        nombre={'Preguntas'}
-        />
-      </View>
-      <View
-        className="h-[30%] mt-1"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          flexDirection: "row",
-        }}
-      >
-        <Card 
-        imagen={require('../assets/availability.png')}
-        nombre={'Availability'}
-        />
-      </View>
     </View>
   )
 }

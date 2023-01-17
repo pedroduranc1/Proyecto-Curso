@@ -10,6 +10,7 @@ import { amarillo, azul, gris } from "./colores";
 import BasicScreen from "../screens/BasicScreen";
 import IntermedioScreen from "../screens/IntermedioScreen";
 import AvanzadoScreen from "../screens/AvanzadoScreen";
+import TiemposVerbales from "../screens/TiemposVerbales";
 
 export const MainNav = [
     {
@@ -23,6 +24,10 @@ export const MainNav = [
     {
         Nombre: "Home",
         Componente: HomeScreen
+    },
+    {
+        Nombre: "Tiempos Verbales",
+        Componente: TiemposVerbales
     }
 ]
 
@@ -84,5 +89,50 @@ export const TopNav = [
         Nombre: 'Avanzado',
         Componente: AvanzadoScreen,
         Size: 'w-24'
+    }
+]
+
+export const BasicsCards=[
+    {
+        Nombre: "Tiempos Verbales",
+        Imagen: require('../assets/tiemposVerbales.png')
+    },
+    {
+        Nombre: "Modales",
+        Imagen: require('../assets/Modales.png')
+    },
+    {
+        Nombre:"Otras estructuras",
+        Imagen: require('../assets/otrasEstructuras.png')
+    },
+    {
+        Nombre:"Vocabulario",
+        Imagen: require('../assets/vocabulario.png')
+    }
+]
+
+export const MediumsCards=[
+    {
+        Nombre: "Interferencias 1",
+        Imagen: require('../assets/interferencias.png')
+    },
+    {
+        Nombre: "Preguntas",
+        Imagen: require('../assets/preguntas.png')
+    },
+    {
+        Nombre:"Availability",
+        Imagen: require('../assets/availability.png')
+    }
+]
+
+export const AdvancedCards=[
+    {
+        Nombre: "Cultura",
+        Imagen: require('../assets/cultura.png')
+    },
+    {
+        Nombre: "Interferencias 2",
+        Imagen: require('../assets/interferencias2.png')
     }
 ]

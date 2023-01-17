@@ -28,11 +28,12 @@ function BottomTabNav() {
         BottomNav.map(({Nombre,Componente,ColorHover,ColorNormal,IconoHover,IconoNormal})=> <Tab.Screen
         options={{
           tabBarIcon: ({focused})=> <View className="items-center justify-center">
-              <Image 
+              <Image  
               className="w-6 h-6 mt-1"
+              resizeMode='contain'
               source={focused ? IconoHover : IconoNormal }/>
               <Text 
-              className="font-bold text-center mt-1"
+              className="mt-1 font-bold text-center"
               style={{color: focused ? ColorHover : ColorNormal,fontSize:10}}>{Nombre}</Text>
           </View>
         }}
