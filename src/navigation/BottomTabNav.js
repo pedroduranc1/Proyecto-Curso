@@ -6,14 +6,15 @@ import { BottomNav } from "../constant/DataNav";
 //Libs
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Modal from "../components/Modal";
-import { useState } from "react";
+
+import { useModalStore } from "../store/modalStore";
 
 const Tab = createBottomTabNavigator();
 
 
 function BottomTabNav() {
 
-  const [modal, setModal] = useState(false)
+  const modal = useModalStore((state)=> state.modal)
 
   return (
     <>
@@ -68,7 +69,7 @@ function BottomTabNav() {
           )
         )}
       </Tab.Navigator>
-      {modal === true ? <Modal/> : <></>}
+      {modal === true ?  <Modal/> : <></>}
       
     </>
   );

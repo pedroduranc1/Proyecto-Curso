@@ -20,6 +20,7 @@ const BasicScreen = ({ navigation }) => {
               index={index}
               imagen={item.Imagen}
               nombre={item.Nombre}
+              bloqueado={item.Bloqueado}
               navegacion={navigation}
             />
           )}

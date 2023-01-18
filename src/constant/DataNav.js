@@ -14,6 +14,11 @@ import TiemposVerbales from "../screens/TiemposVerbales";
 import Modales from "../screens/Modales";
 import OtrasEstrcuturas from "../screens/OtrasEstrcuturas";
 import Vocabularios from "../screens/Vocabularios";
+import Interferencias1 from "../screens/Interferencias1";
+import Preguntas from "../screens/Preguntas";
+import Availability from "../screens/Availability";
+import Cultura from "../screens/Cultura";
+import Interferencias2 from "../screens/Interferencias2";
 
 export const MainNav = [
     {
@@ -43,7 +48,27 @@ export const MainNav = [
     {
         Nombre: "Vocabulario",
         Componente: Vocabularios
-    }
+    },
+    {
+        Nombre: "Interferencias 1",
+        Componente: Interferencias1
+    },
+    {
+        Nombre: "Preguntas",
+        Componente: Preguntas
+    },
+    {
+        Nombre: "Availability",
+        Componente: Availability
+    },
+    {
+        Nombre: "Cultura",
+        Componente: Cultura
+    },
+    {
+        Nombre: "Interferencias 2",
+        Componente: Interferencias2
+    },
 ]
 
 export const BottomNav = [ 
@@ -110,44 +135,53 @@ export const TopNav = [
 export const BasicsCards=[
     {
         Nombre: "Tiempos Verbales",
-        Imagen: require('../assets/tiemposVerbales.png')
+        Imagen: require('../assets/tiemposVerbales.png'),
+        Bloqueado: false,
     },
     {
         Nombre: "Modales",
-        Imagen: require('../assets/Modales.png')
+        Imagen: require('../assets/Modales.png'),
+        Bloqueado: true,
     },
     {
         Nombre:"Otras estructuras",
-        Imagen: require('../assets/otrasEstructuras.png')
+        Imagen: require('../assets/otrasEstructuras.png'),
+        Bloqueado: true,
     },
     {
         Nombre:"Vocabulario",
-        Imagen: require('../assets/vocabulario.png')
+        Imagen: require('../assets/vocabulario.png'),
+        Bloqueado: true,
     }
 ]
 
 export const MediumsCards=[
     {
         Nombre: "Interferencias 1",
-        Imagen: require('../assets/interferencias.png')
+        Imagen: require('../assets/interferencias.png'),
+        Bloqueado: true,
     },
     {
         Nombre: "Preguntas",
-        Imagen: require('../assets/preguntas.png')
+        Imagen: require('../assets/preguntas.png'),
+        Bloqueado: true,
     },
     {
         Nombre:"Availability",
-        Imagen: require('../assets/availability.png')
+        Imagen: require('../assets/availability.png'),
+        Bloqueado: true,
     }
 ]
 
 export const AdvancedCards=[
     {
         Nombre: "Cultura",
-        Imagen: require('../assets/cultura.png')
+        Imagen: require('../assets/cultura.png'),
+        Bloqueado: true,
     },
     {
         Nombre: "Interferencias 2",
-        Imagen: require('../assets/interferencias2.png')
+        Imagen: require('../assets/interferencias2.png'),
+        Bloqueado: true,
     }
 ]
