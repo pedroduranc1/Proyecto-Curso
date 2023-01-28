@@ -7,55 +7,86 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+
+//COLORES
 import { azul, azul_oscuro, blanco, rojo } from "../constant/colores";
 
-const RegistroScreen = ({navigation}) => {
+//LIBS
+import { useUserSignIn } from "../hooks/useUserSignIn";
+import { useCreateUserCollection } from "../hooks/userCreateUserCollection";
+
+const RegistroScreen = ({ navigation }) => {
+  const [Nombre, setNombre] = useState("");
+  const [Usuario, setUsuario] = useState("");
+  const [Password, setPassword] = useState("");
+
+  const registro = async (email, pass, nombre) => {
+    const userCred = await useUserSignIn({ email, pass, nombre });
+    let userData = {
+      ID: userCred.uid,
+      Nombre: nombre,
+      Email: email,
+      Password: pass,
+    };
+
+    const { ID } = userData;
+    await useCreateUserCollection({ ID, userData });
+    navigation.navigate("Home");
+  };
+
   return (
     <View
       style={{
         backgroundColor: azul,
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }}
-      className="flex h-screen w-screen items-center"
+      className="flex items-center w-screen h-screen"
     >
       <View className="flex items-center mt-[20%]">
         <Image
           className="w-[150px] h-[150px]"
           source={require("../assets/l-r-icon.png")}
         />
-        <Text className="text-white font-semibold text-sm mt-4">
+        <Text className="mt-4 text-sm font-semibold text-white">
           ¡Bienvenido a la App!
         </Text>
       </View>
       <View className="w-full mt-[50px] px-8 h-full">
         <TextInput
-          className="w-full h-12 px-5 rounded-xl bg-white"
+          className="w-full h-12 px-5 bg-white rounded-xl"
           placeholder="Nombre"
+          onChangeText={(name) => setNombre(name)}
+          value={Nombre}
         />
         <TextInput
-          className="w-full h-12 px-5 rounded-xl mt-4 bg-white"
+          className="w-full h-12 px-5 mt-4 bg-white rounded-xl"
           placeholder="Ingresa tu correo electrónico"
+          onChangeText={(email) => setUsuario(email)}
+          value={Usuario}
         />
         <TextInput
-          className="w-full h-12 px-5 rounded-xl mt-4 bg-white"
+          className="w-full h-12 px-5 mt-4 bg-white rounded-xl"
           placeholder="Contraseña"
+          onChangeText={(pass) => setPassword(pass)}
+          value={Password}
         />
 
         <TouchableOpacity
+          onPress={() => registro(Usuario, Password, Nombre)}
           style={{ backgroundColor: rojo }}
-          className="w-full h-12 rounded-lg flex items-center justify-center mt-6"
+          className="flex items-center justify-center w-full h-12 mt-6 rounded-lg"
         >
-          <Text className="text-white font-bold ">Registrarme</Text>
+          <Text className="font-bold text-white ">Registrarme</Text>
         </TouchableOpacity>
 
-        <View className="w-full flex flex-row justify-between items-center mt-8">
+        <View className="flex flex-row items-center justify-between w-full mt-8">
           <View className="bg-white w-[25%] h-[1px]" />
-          <Text className="text-white mx-4">O continuar con</Text>
+          <Text className="mx-4 text-white">O continuar con</Text>
           <View className="bg-white w-[25%] h-[1px]" />
         </View>
 
-        <View className="w-full flex flex-row justify-between items-center mt-4">
+        <View className="flex flex-row items-center justify-between w-full mt-4">
           <TouchableOpacity
             style={{ backgroundColor: blanco }}
             className="w-[47%] p-3 items-center justify-center rounded-lg"
@@ -76,13 +107,13 @@ const RegistroScreen = ({navigation}) => {
             />
           </TouchableOpacity>
         </View>
-        <View className="flex w-full mt-10 justify-center items-center">
-                <TouchableOpacity
-                    onPress={()=> navigation.replace('Login')}
-                >
-                    <Text className="text-white font-bold">¿Ya tienes una cuenta? Ingresa aquí</Text>
-                </TouchableOpacity>
-            </View>
+        <View className="flex items-center justify-center w-full mt-10">
+          <TouchableOpacity onPress={() => navigation.replace("Login")}>
+            <Text className="font-bold text-white">
+              ¿Ya tienes una cuenta? Ingresa aquí
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
