@@ -1,23 +1,15 @@
 import {Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import TopTabNav from '../navigation/TopTabNav'
 
 import { blanco, gris_oscuro, rojo } from '../constant/colores'
-import { auth } from '../api/db'
-import { userFindUser } from '../hooks/userFindUser'
+import { useUserStore } from '../store/userStore'
+const MainScreen = () => {
 
-const MainScreen = ({navigation}) => {
-  const [Nombre, setNombre] = useState("Usuario")
-
-  if(auth.currentUser.uid === undefined){
-    navigation.navigate("Login")
-  }
-
+  const setUser = useUserStore(state => state.setUser)
+  const User = useUserStore(state => state.user)
   const setInfo = async () =>{
-    const ID = auth.currentUser.uid;
-    const userInfo = await userFindUser({ID})
-    let user = userInfo
-    setNombre(user.Nombre)
+    setUser()
   }
  
   useEffect(() => {
@@ -30,10 +22,10 @@ const MainScreen = ({navigation}) => {
     <>
       <View 
       style={{backgroundColor:blanco}}
-      className="flex w-full justify-end h-20">
+      className="flex justify-end w-full h-20">
         <Text 
         style={{color:gris_oscuro}}
-        className={`pl-[8%] font-bold text-md`}>Hola,<Text style={{color:rojo }}> {Nombre}</Text></Text>
+        className={`pl-[8%] font-bold text-md`}>Hola,<Text style={{color:rojo }}> {User ? User.name : "Usuario"}</Text></Text>
       </View>
       <TopTabNav/>
     </>

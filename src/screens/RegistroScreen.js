@@ -15,24 +15,37 @@ import { azul, azul_oscuro, blanco, rojo } from "../constant/colores";
 //LIBS
 import { useUserSignIn } from "../hooks/useUserSignIn";
 import { useCreateUserCollection } from "../hooks/userCreateUserCollection";
+import Input from "../components/Input";
+import { useForm, Controller } from "react-hook-form";
+import LoadingModal from "../components/LoadingModal";
+import useHandleError from "../hooks/useHandleError";
 
 const RegistroScreen = ({ navigation }) => {
-  const [Nombre, setNombre] = useState("");
-  const [Usuario, setUsuario] = useState("");
-  const [Password, setPassword] = useState("");
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
+  const [ErrorReg, setErrorReg] = useState("");
+  const [Loading, setLoading] = useState(false);
 
-  const registro = async (email, pass, nombre) => {
-    const userCred = await useUserSignIn({ email, pass, nombre });
-    let userData = {
-      ID: userCred.uid,
-      Nombre: nombre,
-      Email: email,
-      Password: pass,
-    };
-
-    const { ID } = userData;
-    await useCreateUserCollection({ ID, userData });
-    navigation.navigate("Home");
+  const onSubmit = async (data) => {
+    setLoading(true);
+    const userCred = await useUserSignIn(data);
+    if (userCred?.user?.uid === undefined) {
+      let error = userCred
+      useHandleError({error,setErrorReg,setLoading})
+    } else {
+      setErrorReg("");
+      let userData = {
+        ID: userCred.uid,
+        ...data,
+      };
+      const { ID } = userData;
+      await useCreateUserCollection({ ID, userData });
+      setLoading(false);
+      navigation.navigate("Home");
+    }
   };
 
   return (
@@ -53,32 +66,77 @@ const RegistroScreen = ({ navigation }) => {
         </Text>
       </View>
       <View className="w-full mt-[50px] px-8 h-full">
-        <TextInput
-          className="w-full h-12 px-5 bg-white rounded-xl"
-          placeholder="Nombre"
-          onChangeText={(name) => setNombre(name)}
-          value={Nombre}
-        />
-        <TextInput
-          className="w-full h-12 px-5 mt-4 bg-white rounded-xl"
-          placeholder="Ingresa tu correo electrónico"
-          onChangeText={(email) => setUsuario(email)}
-          value={Usuario}
-        />
-        <TextInput
-          className="w-full h-12 px-5 mt-4 bg-white rounded-xl"
-          placeholder="Contraseña"
-          onChangeText={(pass) => setPassword(pass)}
-          value={Password}
+        <Controller
+          defaultValue=""
+          name="name"
+          control={control}
+          rules={{
+            required: { value: true, message: "Nombre es requerido" },
+          }}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              error={errors.name}
+              errorText={errors?.name?.message}
+              placeholder="Nombre"
+              onChangeText={(text) => onChange(text)}
+              value={value}
+            />
+          )}
         />
 
-        <TouchableOpacity
-          onPress={() => registro(Usuario, Password, Nombre)}
-          style={{ backgroundColor: rojo }}
-          className="flex items-center justify-center w-full h-12 mt-6 rounded-lg"
-        >
-          <Text className="font-bold text-white ">Registrarme</Text>
-        </TouchableOpacity>
+        <Controller
+          defaultValue=""
+          name="email"
+          control={control}
+          rules={{
+            required: { value: true, message: "Email es requerido" },
+          }}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              error={errors.email}
+              errorText={errors?.email?.message}
+              placeholder="Email"
+              onChangeText={(text) => onChange(text)}
+              value={value}
+            />
+          )}
+        />
+
+        <Controller
+          defaultValue=""
+          name="pass"
+          control={control}
+          rules={{
+            required: { value: true, message: "Password es requerido" },
+          }}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              error={errors.password}
+              errorText={errors?.password?.message}
+              placeholder="Password"
+              onChangeText={(text) => onChange(text)}
+              value={value}
+            />
+          )}
+        />
+
+        {ErrorReg !== "" && (
+          <Text className="mt-3 font-bold text-center text-red-400 text-md">
+            {ErrorReg}
+          </Text>
+        )}
+
+        {Loading ? (
+          <></>
+        ) : (
+          <TouchableOpacity
+            onPress={handleSubmit(onSubmit)}
+            style={{ backgroundColor: rojo }}
+            className="flex items-center justify-center w-full h-12 mt-6 rounded-lg"
+          >
+            <Text className="font-bold text-white ">Registrarme</Text>
+          </TouchableOpacity>
+        )}
 
         <View className="flex flex-row items-center justify-between w-full mt-8">
           <View className="bg-white w-[25%] h-[1px]" />
@@ -115,6 +173,7 @@ const RegistroScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
+      {Loading ? <LoadingModal pos={'Registro'} /> : <></>}
     </View>
   );
 };

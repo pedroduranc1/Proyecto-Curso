@@ -6,12 +6,12 @@ export const userFindUser = async ({ID}) => {
     const userSnap = await getDoc(userRef)
 
     if(userSnap.exists()){ 
-        const {ID,Nombre,Password,Email} = userSnap.data()
+        const {ID,name,pass,email} = userSnap.data()
         let userInfo = {
             ID,
-            Nombre,
-            Password,
-            Email
+            name,
+            pass,
+            email
         }
         return userInfo
     }else{

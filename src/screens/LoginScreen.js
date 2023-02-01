@@ -10,101 +10,168 @@ import {
 } from "react-native";
 
 import { azul, rojo, blanco, azul_oscuro } from "../constant/colores";
+import { Controller, useForm } from "react-hook-form";
 
 import { useUserLogin } from "../hooks/useUserLogin";
+import Input from "../components/Input";
+import LoadingModal from "../components/LoadingModal";
+import useHandleError from "../hooks/useHandleError";
+import { useUserStore } from "../store/userStore";
+import FingerAndFaceId from "../components/FingerAndFaceId";
 
 const LoginScreen = ({ navigation }) => {
- 
-  const [Usuario, setUsuario] = useState("");
-  const [Password, setPassword] = useState("");
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
+  const [ErrorReg, setErrorReg] = useState("");
+  const [Loading, setLoading] = useState(false);
 
-  const iniciarSesion = async (email,password) => {
-    const {uid} = await useUserLogin({email,password})
-    if(uid){
-      navigation.navigate("Home")
+  const { ID } = useUserStore((state) => state.user);
+  //console.log(ID)
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+    const { email, password } = data;
+    const user = await useUserLogin({ email, password });
+
+    if (user?.user?.uid === undefined) {
+      let error = user;
+      useHandleError({ error, setLoading, setErrorReg });
+    } else {
+      setErrorReg("");
+      setLoading(false);
+
+      navigation.navigate("Home");
     }
-  }
+  };
 
   return (
-    <View
-      style={{
-        backgroundColor: azul,
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-      }}
-      className="items-center flex-1 w-screen h-screen"
-    >
-      <View className="flex items-center mt-[20%]">
-        <Image
-          className="w-[150px] h-[150px]"
-          source={require("../assets/l-r-icon.png")}
-        />
-        <Text className="mt-4 text-sm font-semibold text-white">
-          ¡Bienvenido de nuevo a la App!
-        </Text>
-      </View>
-      <View className="w-full mt-[50px] px-8 h-full">
-        <TextInput
-          className="w-full h-12 px-5 bg-white rounded-xl"
-          placeholder="Ingresa tu correo electronico"
-          onChangeText={(user)=>setUsuario(user)}
-          value={Usuario}
-        />
-        <TextInput
-          className="w-full h-12 px-5 mt-4 bg-white rounded-xl"
-          placeholder="Contraseña"
-          onChangeText={(pass)=>setPassword(pass)}
-          value={Password}
-        />
-
-        <TouchableOpacity className="flex items-end mt-4">
-          <Text className="font-bold text-white">Recuperar contraseña</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={{ backgroundColor: rojo }}
-          className="flex items-center justify-center w-full h-12 mt-6 rounded-lg"
-          onPress={() => iniciarSesion(Usuario,Password)}
-        >
-          <Text className="font-bold text-white ">Iniciar sesión</Text>
-        </TouchableOpacity>
-
-        <View className="flex flex-row items-center justify-between w-full mt-8">
-          <View className="bg-white w-[25%] h-[1px]" />
-          <Text className="mx-4 text-white">O continuar con</Text>
-          <View className="bg-white w-[25%] h-[1px]" />
+    <>
+      <View
+        style={{
+          backgroundColor: azul,
+          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+        }}
+        className="items-center flex-1 w-screen h-screen"
+      >
+        <View className="flex items-center mt-[20%]">
+          <Image
+            className="w-[150px] h-[150px]"
+            source={require("../assets/l-r-icon.png")}
+          />
+          <Text className="mt-4 text-sm font-semibold text-white">
+            ¡Bienvenido de nuevo a la App!
+          </Text>
         </View>
+        <View className="w-full mt-[50px] px-8 h-full">
+          <Controller
+            defaultValue=""
+            name="email"
+            control={control}
+            rules={{
+              required: { value: true, message: "Email es requerido" },
+            }}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                error={errors.name}
+                errorText={errors?.email?.message}
+                placeholder="Email"
+                onChangeText={(text) => onChange(text)}
+                value={value}
+              />
+            )}
+          />
 
-        <View className="flex flex-row items-center justify-between w-full mt-4">
-          <TouchableOpacity
-            style={{ backgroundColor: blanco }}
-            className="w-[47%] p-3 items-center justify-center rounded-lg"
-          >
-            <Image
-              className="w-5 h-5"
-              source={require("../assets/google.png")}
-            />
-          </TouchableOpacity>
+          <Controller
+            defaultValue=""
+            name="password"
+            control={control}
+            rules={{
+              required: { value: true, message: "Password es requerido" },
+            }}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                error={errors.name}
+                errorText={errors?.password?.message}
+                placeholder="Password"
+                onChangeText={(text) => onChange(text)}
+                value={value}
+              />
+            )}
+          />
 
-          <TouchableOpacity
-            style={{ backgroundColor: azul_oscuro }}
-            className="w-[47%] p-3 items-center justify-center rounded-lg"
-          >
-            <Image
-              className="w-5 h-5"
-              source={require("../assets/facebook.png")}
-            />
-          </TouchableOpacity>
-        </View>
-
-        <View className="flex items-center justify-center w-full mt-10">
-          <TouchableOpacity onPress={() => navigation.replace("Registro")}>
-            <Text className="font-bold text-white">
-              ¿No tienes cuenta? Regístrate aquí
+          {ErrorReg !== "" && (
+            <Text className="mt-3 font-bold text-center text-red-400 text-md">
+              {ErrorReg}
             </Text>
+          )}
+
+          <TouchableOpacity className="flex items-end mt-4">
+            <Text className="font-bold text-white">Recuperar contraseña</Text>
           </TouchableOpacity>
+
+          {Loading ? (
+            <></>
+          ) : (
+            <TouchableOpacity
+              style={{ backgroundColor: rojo }}
+              className="flex items-center justify-center w-full h-12 mt-6 rounded-lg"
+              onPress={handleSubmit(onSubmit)}
+            >
+              <Text className="font-bold text-white ">Iniciar sesión</Text>
+            </TouchableOpacity>
+          )}
+
+          {ID !== undefined ? (
+              <FingerAndFaceId
+                navigation={navigation}
+                setLoading={setLoading}
+              />
+          ) : (
+            <></>
+          )}
+
+          <View className="flex flex-row items-center justify-between w-full mt-4">
+            <View className="bg-white w-[25%] h-[1px]" />
+            <Text className="mx-4 text-white">O continuar con</Text>
+            <View className="bg-white w-[25%] h-[1px]" />
+          </View>
+
+          <View className="flex flex-row items-center justify-between w-full mt-4">
+            <TouchableOpacity
+              style={{ backgroundColor: blanco }}
+              className="w-[47%] p-3 items-center justify-center rounded-lg"
+            >
+              <Image
+                className="w-5 h-5"
+                source={require("../assets/google.png")}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{ backgroundColor: azul_oscuro }}
+              className="w-[47%] p-3 items-center justify-center rounded-lg"
+            >
+              <Image
+                className="w-5 h-5"
+                source={require("../assets/facebook.png")}
+              />
+            </TouchableOpacity>
+          </View>
+
+          <View className="flex items-center justify-center w-full mt-10">
+            <TouchableOpacity onPress={() => navigation.replace("Registro")}>
+              <Text className="font-bold text-white">
+                ¿No tienes cuenta? Regístrate aquí
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+      {Loading ? <LoadingModal pos={"Login"} /> : <></>}
+    </>
   );
 };
 
