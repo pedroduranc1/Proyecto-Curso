@@ -44,7 +44,9 @@ const ProfileScreen = ({navigation}) => {
                 />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity
+            onPress={()=> navigation.navigate("Editar Perfil")}
+            >
               <View
                 style={{ backgroundColor: gris_oscuro }}
                 className="w-full py-[2%] mt-2 rounded-md"
@@ -62,7 +64,7 @@ const ProfileScreen = ({navigation}) => {
       </View>
       <View className="px-10">
         <Text className="mt-5 font-bold" style={{ color: gris_oscuro }}>
-          Progeso
+          Progreso
         </Text>
 
         <View className="flex items-center justify-center w-full">
@@ -83,7 +85,7 @@ const ProfileScreen = ({navigation}) => {
       //Toggling the visibility state on the click of the back botton
       onBackdropPress={btsv}
       >
-        <BottomSheetContent LogOut={LogOut} />
+        <BottomSheetContent LogOut={LogOut} navigation={navigation} />
       </BottomSheet>
     </View>
   );

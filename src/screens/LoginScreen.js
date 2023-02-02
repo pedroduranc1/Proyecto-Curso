@@ -17,7 +17,6 @@ import Input from "../components/Input";
 import LoadingModal from "../components/LoadingModal";
 import useHandleError from "../hooks/useHandleError";
 import { useUserStore } from "../store/userStore";
-import FingerAndFaceId from "../components/FingerAndFaceId";
 
 const LoginScreen = ({ navigation }) => {
   const {
@@ -124,14 +123,7 @@ const LoginScreen = ({ navigation }) => {
             </TouchableOpacity>
           )}
 
-          {ID !== undefined ? (
-              <FingerAndFaceId
-                navigation={navigation}
-                setLoading={setLoading}
-              />
-          ) : (
-            <></>
-          )}
+          
 
           <View className="flex flex-row items-center justify-between w-full mt-4">
             <View className="bg-white w-[25%] h-[1px]" />

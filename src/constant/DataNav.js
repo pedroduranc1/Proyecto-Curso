@@ -19,6 +19,9 @@ import Preguntas from "../screens/Preguntas";
 import Availability from "../screens/Availability";
 import Cultura from "../screens/Cultura";
 import Interferencias2 from "../screens/Interferencias2";
+import CambiarPass from "../screens/CambiarPass";
+import RestablecerPass from "../screens/RestablecerPass";
+import EditarPerfil from "../screens/EditarPerfil";
 
 export const MainNav = [
     {
@@ -68,6 +71,18 @@ export const MainNav = [
     {
         Nombre: "Interferencias 2",
         Componente: Interferencias2
+    },
+    {
+        Nombre: "Cambiar Pass",
+        Componente: CambiarPass
+    },
+    {
+        Nombre: "Restablecer Pass",
+        Componente: RestablecerPass
+    },
+    {
+        Nombre: "Editar Perfil",
+        Componente: EditarPerfil
     },
 ]
 

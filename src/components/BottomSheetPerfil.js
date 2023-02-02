@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { gris_oscuro, rojo } from "../constant/colores";
 
-const BottomSheetContent = ({LogOut,navigation}) => {
+const BottomSheetPerfil = ({LogOut,navigation}) => {
   return (
     <View className="bg-white w-[100%] h-[17%] rounded-t-2xl flex items-center">
       <View
@@ -11,17 +11,16 @@ const BottomSheetContent = ({LogOut,navigation}) => {
       ></View>
       <TouchableOpacity className="w-[90%] mx-[5%] py-3 mt-4 border-b-2 border-gray-200"
         onPress={()=>{
-          navigation.navigate("Cambiar Pass")
         }}
       >
         <View className="flex flex-row items-center">
           <Image
             className="w-5 h-5 mr-2"
             resizeMode="contain"
-            source={require("../assets/key.png")}
+            source={require("../assets/image.png")}
           />
           <Text style={{ color: gris_oscuro }} className=" text-md">
-            Cambiar contraseña
+            Elegir desde galeria
           </Text>
         </View>
       </TouchableOpacity>
@@ -35,15 +34,15 @@ const BottomSheetContent = ({LogOut,navigation}) => {
           <Image
             className="w-5 h-5 mr-2"
             resizeMode="contain"
-            source={require("../assets/logout.png")}
+            source={require("../assets/trash.png")}
           />
           <Text 
           style={{ color: rojo }} className=" text-md"
-          >Salir de sesión</Text>
+          >Eliminar foto de perfil</Text>
         </View>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default BottomSheetContent;
+export default BottomSheetPerfil;
