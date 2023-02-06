@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { gris_oscuro, rojo } from "../constant/colores";
 
-const BottomSheetContent = ({LogOut,navigation}) => {
+const BottomSheetContent = ({LogOut,navigation,openClosed}) => {
   return (
     <View className="bg-white w-[100%] h-[17%] rounded-t-2xl flex items-center">
       <View
@@ -26,7 +26,10 @@ const BottomSheetContent = ({LogOut,navigation}) => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity className="w-[90%] mx-[5%] py-3"
-      onPress={LogOut} 
+      onPress={()=>{
+        openClosed()
+        LogOut()
+      }} 
       >
 
         <View 

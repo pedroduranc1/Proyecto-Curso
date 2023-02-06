@@ -85,7 +85,7 @@ const ProfileScreen = ({navigation}) => {
       //Toggling the visibility state on the click of the back botton
       onBackdropPress={btsv}
       >
-        <BottomSheetContent LogOut={LogOut} navigation={navigation} />
+        <BottomSheetContent LogOut={LogOut} openClosed={btsv} navigation={navigation} />
       </BottomSheet>
     </View>
   );

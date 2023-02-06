@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Modal from "../components/Modal";
 
 import { useModalStore } from "../store/modalStore";
+import { useState } from "react";
 
 const Tab = createBottomTabNavigator();
 

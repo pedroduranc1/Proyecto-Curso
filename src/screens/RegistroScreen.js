@@ -32,10 +32,7 @@ const RegistroScreen = ({ navigation }) => {
   const onSubmit = async (data) => {
     setLoading(true);
     const userCred = await useUserSignIn(data);
-    if (userCred?.user?.uid === undefined) {
-      let error = userCred
-      useHandleError({error,setErrorReg,setLoading})
-    } else {
+    if (userCred?.uid) {
       setErrorReg("");
       let userData = {
         ID: userCred.uid,
@@ -45,6 +42,9 @@ const RegistroScreen = ({ navigation }) => {
       await useCreateUserCollection({ ID, userData });
       setLoading(false);
       navigation.navigate("Home");
+    } else {
+      let error = userCred;
+      useHandleError({ error, setErrorReg, setLoading });
     }
   };
 
@@ -173,7 +173,7 @@ const RegistroScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-      {Loading ? <LoadingModal pos={'Registro'} /> : <></>}
+      {Loading ? <LoadingModal pos={"Registro"} /> : <></>}
     </View>
   );
 };
